@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IoT Components Store</title>
+  <style>
+    :root {
+      --primary: #3498db;
+      --secondary: #2c3e50;
+      --accent: #ecf0f1;
+      --hover: #2980b9;
+      --text-dark: #333;
+      --text-light: #fff;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--accent);
+      color: var(--text-dark);
+      line-height: 1.6;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    header {
+      background-color: var(--secondary);
+      color: var(--text-light);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+
+    header h1 {
+      font-size: 28px;
+    }
+
+    header button {
+      background-color: var(--primary);
+      color: var(--text-light);
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+    }
+
+    header button:hover {
+      background-color: var(--hover);
+    }
+
+    nav {
+      background-color: var(--primary);
+      text-align: center;
+      padding: 12px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    nav a {
+      color: white;
+      margin: 0 15px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 16px;
+      transition: opacity 0.2s;
+    }
+
+    nav a:hover {
+      opacity: 0.8;
+    }
+
+    .container {
+      flex: 1;
+      padding: 40px 5%;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    h2 {
+      font-size: 26px;
+      color: var(--secondary);
+      margin-bottom: 20px;
+      border-bottom: 3px solid var(--primary);
+      padding-bottom: 5px;
+    }
+
+    .grid {
+      display: flex;
+      flex-wrap: nowrap;
+      justify-content: space-between;
+      gap: 20px;
+      overflow-x: auto;
+      padding-bottom: 20px;
+    }
+
+    .product-card {
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      text-align: center;
+      padding: 15px;
+      min-width: 250px;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .product-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+    }
+
+    .product-card img {
+      width: 100%;
+      height: 160px;
+      object-fit: contain;
+      border-bottom: 1px solid #ddd;
+      margin-bottom: 15px;
+    }
+
+    .product-card h4 {
+      font-size: 18px;
+      margin-bottom: 5px;
+      color: var(--text-dark);
+    }
+
+    .product-card p {
+      color: var(--primary);
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .product-card a {
+      display: inline-block;
+      text-decoration: none;
+      color: var(--text-light);
+      background-color: var(--primary);
+      padding: 8px 14px;
+      border-radius: 4px;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+      cursor: pointer;
+    }
+
+    .product-card a:hover {
+      background-color: var(--hover);
+    }
+
+    footer {
+      background-color: var(--secondary);
+      color: #ccc;
+      text-align: center;
+      padding: 20px 10px;
+      font-size: 14px;
+      margin-top: auto;
+    }
+
+    footer a {
+      color: #66ccff;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 999;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.5);
+    }
+
+    .modal-content {
+      background-color: #fff;
+      margin: 5% auto;
+      padding: 20px;
+      border-radius: 8px;
+      width: 90%;
+      max-width: 500px;
+      position: relative;
+    }
+
+    .close {
+      color: #aaa;
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .close:hover {
+      color: red;
+    }
+
+    .modal-content input {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    .modal-content button {
+      width: 100%;
+      padding: 10px;
+      background-color: #28a745;
+      border: none;
+      color: white;
+      font-size: 16px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .modal-content .switch {
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    .modal-content .switch a {
+      color: #007bff;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .modal-content .switch a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>IoT Components Store</h1>
+  <button onclick="openLoginModal('login')">Login / Register</button>
+</header>
+
+<nav>
+  <a href="#iot">IoT</a>
+  <a href="#electronics">Electronics</a>
+  <a href="#robotics">Robotics</a>
+  <a href="#vlsi">VLSI</a>
+</nav>
+
+<div class="container" id="product-container"></div>
+
+<div id="productModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal('productModal')">&times;</span>
+    <h2 id="productTitle"></h2>
+    <p id="productDescription"></p>
+    <h4>Specifications:</h4>
+    <ul id="productSpecs"></ul>
+    <button onclick="alert('Order placed!')">Order Now</button>
+  </div>
+</div>
+
+<div id="loginModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal('loginModal')">&times;</span>
+    <h2 id="modalTitle">Login</h2>
+    <input type="email" placeholder="Email">
+    <input type="password" placeholder="Password">
+    <div id="registerFields" style="display: none;">
+      <input type="text" placeholder="Full Name">
+      <input type="password" placeholder="Confirm Password">
+    </div>
+    <button>Submit</button>
+    <div class="switch">
+      <p id="switchText">Don't have an account? <a onclick="toggleLoginRegister()">Register</a></p>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>&copy; 2025 IoT Components Store. All rights reserved.</p>
+  <p>Developed by Rudra Krishna | Email: rudrakrishna785@gmail.com</p>
+</footer>
+
+<script>
+  const products = [
+    { category: "iot", name: "ESP32", price: "₹350", img: "images/esp32.png", desc: "WiFi + Bluetooth microcontroller", specs: "Dual-core, 2.4GHz WiFi, BLE" },
+    { category: "iot", name: "NodeMCU", price: "₹300", img: "images/nodemcu.png", desc: "ESP8266 module", specs: "WiFi, USB, GPIO" },
+    { category: "iot", name: "LoRa Module", price: "₹550", img: "images/lora.png", desc: "Long-range RF module", specs: "433MHz, 10Km" },
+    { category: "iot", name: "Raspberry Pi", price: "₹2700", img: "images/raspberrypi.png", desc: "Linux-based SBC", specs: "Quad-core, GPIO, HDMI" },
+    { category: "electronics", name: "Resistor Kit", price: "₹90", img: "images/resistor.png", desc: "Resistors of various values", specs: "100Ω to 1MΩ" },
+    { category: "electronics", name: "Capacitor Kit", price: "₹100", img: "images/capacitor.png", desc: "Electrolytic & ceramic caps", specs: "100nF to 1000uF" },
+    { category: "electronics", name: "LED Pack", price: "₹120", img: "images/led.png", desc: "Set of colored LEDs", specs: "3mm, 5mm, RGB" },
+    { category: "electronics", name: "Diode Pack", price: "₹80", img: "images/diode.png", desc: "Basic diodes", specs: "1N4001, 1N4148" },
+    { category: "robotics", name: "Robot Wheel", price: "₹200", img: "images/robotwheel.png", desc: "Rubber grip wheels", specs: "65mm diameter" },
+    { category: "robotics", name: "Servo Motor", price: "₹150", img: "images/servo.png", desc: "Standard servo", specs: "5V, 180° rotation" },
+    { category: "robotics", name: "Ultrasonic Sensor", price: "₹120", img: "images/ultrasonic.png", desc: "HC-SR04 sensor", specs: "2cm to 400cm range" },
+    { category: "robotics", name: "FPGA Board", price: "₹1800", img: "images/fpga.png", desc: "Custom logic board", specs: "Spartan 6, Xilinx" },
+    { category: "vlsi", name: "JTAG Debugger", price: "₹900", img: "images/jtag.png", desc: "USB debugger tool", specs: "Xilinx supported" },
+    { category: "vlsi", name: "Xilinx Chip", price: "₹1400", img: "images/xilinx.png", desc: "FPGA IC", specs: "XC7Z010" },
+    { category: "vlsi", name: "VLSI Book", price: "₹599", img: "images/vlsi-book.png", desc: "Learning resource", specs: "Theory and practice" },
+    { category: "vlsi", name: "ASIC Chip", price: "₹1500", img: "images/asic.png", desc: "Application-specific IC", specs: "Custom logic design" },
+  ];
+
+  const container = document.getElementById("product-container");
+  const categories = ["iot", "electronics", "robotics", "vlsi"];
+
+  categories.forEach(cat => {
+    const section = document.createElement("section");
+    section.id = cat;
+    section.innerHTML = `<h2>${cat.toUpperCase()} Products</h2><div class="grid"></div>`;
+    const grid = section.querySelector(".grid");
+
+    products.filter(p => p.category === cat).forEach(prod => {
+      const card = document.createElement("div");
+      card.className = "product-card";
+      card.innerHTML = `
+        <img src="${prod.img}" alt="${prod.name}">
+        <h4>${prod.name}</h4>
+        <p>${prod.price}</p>
+        <a onclick="showProductDetails('${prod.name}', '${prod.desc}', '${prod.specs}')">View Details</a>
+      `;
+      grid.appendChild(card);
+    });
+
+    container.appendChild(section);
+  });
+
+  function showProductDetails(name, description, specs) {
+    document.getElementById("productTitle").textContent = name;
+    document.getElementById("productDescription").textContent = description;
+    const specList = document.getElementById("productSpecs");
+    specList.innerHTML = '';
+    specs.split(',').forEach(spec => {
+      const li = document.createElement('li');
+      li.textContent = spec.trim();
+      specList.appendChild(li);
+    });
+    document.getElementById("productModal").style.display = "block";
+  }
+
+  function openLoginModal(type) {
+    document.getElementById("loginModal").style.display = "block";
+    document.getElementById("modalTitle").textContent = type === 'register' ? 'Register' : 'Login';
+    document.getElementById("registerFields").style.display = type === 'register' ? 'block' : 'none';
+    document.getElementById("switchText").innerHTML = type === 'register' ?
+      'Already have an account? <a onclick="toggleLoginRegister()">Login</a>' :
+      'Don\'t have an account? <a onclick="toggleLoginRegister()">Register</a>';
+  }
+
+  function toggleLoginRegister() {
+    const isRegister = document.getElementById("modalTitle").textContent === 'Register';
+    openLoginModal(isRegister ? 'login' : 'register');
+  }
+
+  function closeModal(id) {
+    document.getElementById(id).style.display = "none";
+  }
+
+  window.onclick = function(event) {
+    ['loginModal', 'productModal'].forEach(id => {
+      const modal = document.getElementById(id);
+      if (event.target === modal) modal.style.display = "none";
+    });
+  };
+</script>
+
+</body>
+</html>
